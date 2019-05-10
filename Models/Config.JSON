@@ -15,7 +15,7 @@
       ]
     },
     "modelName": "svmSem3",
-    "liveModelName": "svmSem3",
+    "liveModelName": "svmSem",
     "labelToTextDict": {
       "1": "company",
       "0": "fruit"
