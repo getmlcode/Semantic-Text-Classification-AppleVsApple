@@ -1,0 +1,161 @@
+Project Directory Structure
+
+[Semantic-Text-Classification-AppleVsApple] : ROOT DIR
+	[Models]
+		[svm]
+			InferSvmSemantics.py 		- SVM model inference
+			SVM.py 						- SVM model training
+				[SavedModels] 			: {contains svm models that server will use for inerence}
+				[LiveModel]   			: {contains svm models that were saved during training and may be made live if one wants}
+		[LogisticRegression]
+			InferLrSemantics.py 		(not coded)
+			LogisticRegression.py 		(not coded)
+				[SavedModels] 			: {contains svm models that server will use for inerence}
+				[LiveModel]   			: {contains svm models that were saved during training and may be made live if one wants}
+		DataCollection.py     			- script to collect user queries and server responses in a database
+		InferSemantics.py     			- script to selct model for inference
+		semanticRestApi.py    			- server side script that loads the selcted model and starts the server 
+		testApiServer.py      			- script to test server
+		NEW_MODEL_TEMPLATE_TRAIN.py 	- empty template for adding new model training logic
+		NEW_MODEL_TEMPLATE_INFERENCE.py	- empty template for adding new model training logic
+		Config.JSON  					- Config file that has parameters for each model, this needs to be updated
+										  whenever any new model is added according to parameters is needs.
+	[TrainData]
+		apple-computers.txt   			- raw file containing apple company paragraphs
+		apple-computers.txt   			- raw file containing apple fruit paragraphs
+		TrainData.txt         			- file containg labled data extracted from above files [paragraphs label]
+	
+	dataAndModelExploration.ipynb 		- jupyter notebook containing experiments performed for this assignment and justifying use
+									      of linear model svm
+	SemanticClassificationGUI.py		- code that builds GUI to interact with server
+	TrainSemanticModel.py         		- code that lets user select,train,save and push learnt model live for 
+										  which implementation is available in Models Folder. (here only SVM is available)
+	rawTextToTrainData.py           	- script to convert raw files into TrainData.txt file removing stopwords, special characters
+									      and other basic preprocessing. Raw files paragraphs are assumed to be separated with two
+										  new line characters (\n\n).
+									  
+									  
+									  
+NOTE : 3 files are saved for each model
+			1. <modelName>_Vocab.pkl       : This is voculary produced by Tf-IDF vectorizer needed to represent new-test-sample
+			2. <modelName>_Model.pkl       : Learnt model file
+			3. <modelName>_LabelToText.pkl : It is a dictionary of trainLabe:textLabel. Here it is {"1":"company","0":"fruit"}
+			                                 At inference time script uses it to return response is text form rather than integer
+											 labels. 
+											 while saving it, mapping are read from config file and user must encode it there.
+											 
+											
+For Testing
+-----------
+make Semantic-Text-Classification-AppleVsApple current working directory
+
+1. Train : A train model is alreaddy present, but if one wants to train then run
+		   python TrainSemanticModel.py --modeName svm(or any model for which implementation is there)
+		   
+		   This will read hyper-parameters for selected model from Config.JSON and train 
+		   the model.
+		   
+		   It gives accuracy and F1 score of the model just trained and saves it in 
+		   Models/<modelName>/SavedModels directory.
+		   
+		   Models are saved with their F1-score appended to their name.
+		   
+		   It prompts user if this model should be made live or not ? 
+		   ---------------------------------------------------------------
+		   1 for YES and 0 for NO.
+		   If user says 1 then it saves this model in Models/<modelName>/LiveModel.
+		   model name is taken from Config.JSON file with key as <modelName>
+		   
+		   Till now it is only saved, it will only be used by server script for inference if in config 
+		   file's <liveModelName> key has this model's name as its value.
+		   
+		    Note:
+				If a model with same name is already present then it will be replaced by this new one.
+				[this happens for both saved and live models]
+			
+			It will also prompt user whether to continue training or not ?
+			--------------------------------------------------------------
+			If user wants to try out different setting of hyper-parameters then it should be changed 
+			in the configuration file before proceeding to train again otherwise same config will be 
+			read
+
+2. Test : you need to run two files SemanticClassificationGUI.py and semanticRestApi.py
+		  Run these commands with Semantic-Text-Classification-AppleVsApple as current working directory
+		  
+		  1. python SemanticClassificationGUI.py
+		  2. python <full path to semanticRestApi.py directory>/semanticRestApi.py --model svm
+		  
+		  when semanticRestApi.py runs it will load the saved model from the model's LiveModel 
+		  folder. It reads the name from config file's <liveModelName> key for the model.
+
+3. GUI  : Hopefully it is self explanatory.
+		  left text box        : For input samples separated by two new line characters (\n\n) 
+		  right text box       : Shows response for each query returned as list or error messages
+		                         is case of exceptions.
+		  Entry IP Address     : IP Address of the server that hosts text semantic service
+		  
+		  --> All buttons have description over them that indicates their funtionality
+		  
+Dependencies 
+------------
+python 			3.5.6
+sklearn 		0.2.0
+pathlib			2.3.2
+os				any
+json			2.6.0
+argparse		any
+flask			1.0.2			
+threading		any
+tkinter			8.6
+pickle			0.7.5
+sqlite3			3.24.0
+datetime		any
+nltk			3.3
+
+A word on project architecture
+------------------------------
+While designing architecture, objective in mind was to make it easily modifiable and ease of 
+integrating other models.
+
+If one wants to incorporate any new model into this 3 existing files need to be modified 
+	1. TrainSemanticModel.py	: One if statement
+	2. InferSemantics.py		: One if statement 
+	3. Config.JSON				: Depends on model being added
+
+Server script code, GUI files and database related files need no change
+
+Following steps should suffice :-
+
+1. Create new model folder in Models directory
+
+2. Copy empty templates present in Models folder in directory for new model
+
+3. Rename these copied empty templates
+
+4. Implement the functions present in them and rename the class providing those funtions
+   accordingly
+
+5. Update select model function in class SemanticModel of TrainSemanticModel.py accordingly,
+   one would need to decide on codeword to identify the model which user will use to select
+   it. (e.g. svm for Support Vectore Machine in this case)
+
+6. Update the constructor for SemanticModel class in InferSemantics.py file present in 
+   Models folder.
+
+7. Implement Inference and Train logic for the new model independently of other models, as
+   long as it only requires existing functions provided in empty template everything should
+   be fine
+
+8. Update Config.JSON config file to include a dictionary of parameters for this 
+   new model. Key for accessing the dictionary of parameters for the new model should be the
+   codeword chosen for this new model
+
+Config.JSON
+--------------------
+It is a json file 
+
+It is a multilevel dictionary when read into program:
+	--> First level key must be codeword for the mdoel present or being added
+	--> Further levels vary depending on model, but must include following keys
+		1. "modelName"		: Name used to save the trained model in SavedModels directory
+		2. "liveModelName"	: Name used for pushing model to live server
