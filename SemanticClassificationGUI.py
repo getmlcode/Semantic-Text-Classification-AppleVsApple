@@ -37,6 +37,11 @@ class dataWeave_GUI:
         self.outputTextBox = tk.Text(self.userCommandsFrame, relief=SUNKEN, state=DISABLED)
         self.outputTextBox.grid(row=0, column=1)
 
+        #self.vsb = tk.Scrollbar(self, orient="vertical", command=self.outputTextBox.yview)
+        #self.outputTextBox.configure(yscrollcommand=self.vsb.set)
+        #self.vsb.pack(side="right", fill="y")
+        #self.outputTextBox.pack(side="left", fill="both", expand=True)
+
         self.clearOutput = ttk.Button(self.userCommandsFrame, 
                                       text='Clear Output Text', 
                                       command=self.clearOutputTextBox).\
@@ -84,10 +89,13 @@ class dataWeave_GUI:
                 ServerResult = "\n".join(semantic for semantic in textSemantics)
 
                 self.outputTextBox.insert(tk.INSERT, 'Semantics : \n'+ str(ServerResult)+"\n\n")
+                self.outputTextBox.see(tk.END)
             except requests.exceptions.RequestException as exception:
                 self.outputTextBox.insert(tk.INSERT, 'Server Exception : \n\n'+ str(exception)+"\n\n")
+                self.outputTextBox.see(tk.END)
             except Exception as exception:
                 self.outputTextBox.insert(tk.INSERT, 'Exception : \n\n'+ str(exception)+"\n\n")
+                self.outputTextBox.see(tk.END)
 
             # Restore state of Input Text Box to normal after inference
             self.inputTextBox.config(state="normal")
@@ -95,6 +103,7 @@ class dataWeave_GUI:
         else:
             self.outputTextBox.insert(tk.INSERT, "Input Text Must Be Non Empty\n")
             self.outputTextBox.config(state="disabled")
+            self.outputTextBox.see(tk.END)
         return
     
     def clearInputTextBox(self):
