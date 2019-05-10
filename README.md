@@ -1,5 +1,7 @@
 # Semantic-Text-Classification-AppleVsApple
-This is semantics text classification with both client and server side scripts and a GUI for client to interact with the server. It has code for both training and inference.
+This is semantics text classification with both client and server side scripts and a GUI for client to interact with the server. It has code for both training and inference.  
+Models directory has trained SVM for this task and one can easily integrate other models for training and inference with minimal changes to existing files.  
+See help.txt for detialed explanation
 
 # Demo
 ![](SemanticTextClassification.gif)
