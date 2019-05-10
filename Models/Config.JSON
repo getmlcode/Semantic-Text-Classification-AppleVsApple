@@ -1,0 +1,38 @@
+{
+  "svm": {
+    "train": {
+      "ngram": 1,
+      "maxFeatures": 800,
+      "testSetFraction": 0.4,
+      "folds": 5,
+      "score": "f1",
+      "hyperParams": [
+        {
+          "kernel": [ "linear" ],
+          "gamma": [ 1e-1, 1e-2, 1e-3, 1e-4 ],
+          "C": [ 1, 10, 100, 1000 ]
+        }
+      ]
+    },
+    "modelName": "svmSem3",
+    "liveModelName": "svmSem3",
+    "labelToTextDict": {
+      "1": "company",
+      "0": "fruit"
+    }
+  },
+
+  "lr": {
+    "train": {
+      "score": "f1",
+      "folds": 5
+    },
+    "modelName": "logRegSem",
+    "liveModelName": "logRegSem",
+    "labelToTextDict": {
+      "1": "company",
+      "0": "fruit"
+    }
+  }
+
+}
