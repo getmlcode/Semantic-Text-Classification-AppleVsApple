@@ -4,8 +4,7 @@ It has code for :
 1) Training and inference of models  
 2) Collecting data of client requests and server response is a sqlite database  
   
-Models directory has trained SVM for this task and one can easily integrate other models for training and inference with minimal  
-changes to existing files.  
+Models directory has trained SVM for this task and one can easily integrate other models for training and inference with minimal changes to existing files.  
   
 See help.txt for detialed explanation  
 
