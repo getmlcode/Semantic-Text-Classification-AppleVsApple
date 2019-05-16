@@ -28,7 +28,7 @@ Project Directory Structure
 	dataAndModelExploration.ipynb 		- jupyter notebook containing experiments performed
 	SemanticClassificationGUI.py		- code that builds GUI to interact with server
 	TrainSemanticModel.py         		- code that lets user select,train,save and push learnt model live for which 
-	implementation is available in Models Folder. (here only SVM is available)
+	                   implementation is available in Models Folder. (here only SVM is available)
 	rawTextToTrainData.py           	- script to convert raw files into TrainData.txt file removing stopwords, special 
 										  characters and other basic preprocessing. Raw files paragraphs are assumed to be 							  
 										  separated with two new line characters (\n\n).
