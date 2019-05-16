@@ -30,7 +30,7 @@ Project Directory Structure
 	TrainSemanticModel.py         		- code that lets user select,train,save and push learnt model live for which 
 	                                          implementation is available in Models Folder. (here only SVM is available)
 	rawTextToTrainData.py           	- script to convert raw files into TrainData.txt file removing stopwords, special 
-										  characters and other basic preprocessing. Raw files paragraphs are assumed to be 							  
+								characters and other basic preprocessing. Raw files paragraphs are assumed to be 							  
 										  separated with two new line characters (\n\n).
 									  
 NOTE : 3 files are saved for each model
