@@ -19,7 +19,7 @@ Project Directory Structure
 		NEW_MODEL_TEMPLATE_TRAIN.py 	- empty template for adding new model training logic
 		NEW_MODEL_TEMPLATE_INFERENCE.py	- empty template for adding new model inference logic
 		Config.JSON  			- Config file that has parameters for each model, this needs to be updated
-						  whenever any new model is added according to parameters is needs.
+						  whenever any new model is added according to parameters it needs.
 	[TrainData]
 		apple-computers.txt   		- raw file containing apple company paragraphs
 		apple-computers.txt   		- raw file containing apple fruit paragraphs
@@ -27,14 +27,18 @@ Project Directory Structure
 	
 	dataAndModelExploration.ipynb 		- jupyter notebook containing experiments performed
 	SemanticClassificationGUI.py		- code that builds GUI to interact with server
-	TrainSemanticModel.py         		- code that lets user select,train,save and push learnt model live for 									  which implementation is available in Models Folder. (here only SVM is available)
-	rawTextToTrainData.py           	- script to convert raw files into TrainData.txt file removing stopwords, special 							  characters and other basic preprocessing. Raw files paragraphs are assumed to be 							  separated with two new line characters (\n\n).
+	TrainSemanticModel.py         		- code that lets user select,train,save and push learnt model live for
+										  which implementation is available in Models Folder. (here only SVM is available)
+	rawTextToTrainData.py           	- script to convert raw files into TrainData.txt file removing stopwords, special 
+										  characters and other basic preprocessing. Raw files paragraphs are assumed to be 							  
+										  separated with two new line characters (\n\n).
 									  
 NOTE : 3 files are saved for each model
-			1. <modelName>_Vocab.pkl       : This is voculary produced by Tf-IDF vectorizer needed to represent new-test-								 sample
+			1. <modelName>_Vocab.pkl       : This is voculary produced by Tf-IDF vectorizer needed to represent new-test sample
 			2. <modelName>_Model.pkl       : Learnt model file
-			3. <modelName>_LabelToText.pkl : It is a dictionary of trainLabe:textLabel. Here it is 		              								 {1":"company","0":"fruit"} At inference time script uses it to return response                                                          is text form rather than integer labels. 
-			                                 while saving it, mapping are read from config file and user must encode it 								 there.
+			3. <modelName>_LabelToText.pkl : It is a dictionary of trainLabe:textLabel. Here it {1":"company","0":"fruit"} 
+											 At inference time script uses it to return response is text form rather than integer 
+											 labels. while saving it, mapping are read from config file and user must encode it there.
 											 
 											
 For Testing
