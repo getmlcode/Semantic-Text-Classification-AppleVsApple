@@ -6,18 +6,18 @@ Project Directory Structure
 			InferSvmSemantics.py 	- SVM model inference
 			SVM.py 			- SVM model training
 				[SavedModels] 	: {contains svm models that server will use for inerence}
-				[LiveModel]   	: {contains svm models that were saved during training wants}
+				[LiveModel]   	: {contains svm models that were saved during training}
 		[LogisticRegression]
 			InferLrSemantics.py	: (not coded)
 			LogisticRegression.py	: (not coded)
-				[SavedModels]	: {contains svm models that server will use for inerence}
-				[LiveModel]	: {contains svm models that were saved during}
+				[SavedModels]	: {contains logistic regression models that server will use for inerence}
+				[LiveModel]	: {contains logistic regression models that were saved during}
 		DataCollection.py		- script to collect user queries and server responses in a database
 		InferSemantics.py     		- script to selct model for inference
 		semanticRestApi.py    		- server side script that loads the selcted model and starts the server 
 		testApiServer.py      		- script to test server
 		NEW_MODEL_TEMPLATE_TRAIN.py 	- empty template for adding new model training logic
-		NEW_MODEL_TEMPLATE_INFERENCE.py	- empty template for adding new model training logic
+		NEW_MODEL_TEMPLATE_INFERENCE.py	- empty template for adding new model inference logic
 		Config.JSON  			- Config file that has parameters for each model, this needs to be updated
 						  whenever any new model is added according to parameters is needs.
 	[TrainData]
